@@ -1,0 +1,21 @@
+/* ArtworksComponent's private CSS styles */
+.artworkList li {
+  list-style: none;
+  width: 47%;
+  float: left;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.artworkList li:nth-child(odd) {
+  margin-right: 5%;
+}
+
+.artworkList p {
+  line-height: 1.2em;
+}
+
+.artworkList li img {
+  width: 100%;
+  border: 1px solid #999;
+}

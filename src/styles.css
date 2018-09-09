@@ -1,0 +1,49 @@
+/* Application-wide Styles */
+a {
+  text-decoration: none;
+  color: #9d46d0;
+  cursor: pointer;
+}
+
+main {
+  margin: 2em 0;
+}
+
+header.container {
+  margin-bottom: 2em;
+}
+header h2 {
+  margin-right: 1em;
+  margin-bottom: 0;
+}
+header h2 a {
+  color: #666;
+}
+header nav {
+  margin-top: 1.6em;
+  clear: both;
+}
+header nav a {
+  margin: 0.2em 1.5em 0.2em 0;
+}
+
+nav#leftnav {
+  margin: 0 0 1.5em 0;
+}
+nav#leftnav a.active {
+  color: #666;
+}
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+  header nav {
+    clear: none;
+  }
+  header nav a {
+    margin: 0.2em 0.4em;
+  }
+  nav#leftnav {
+    margin: 0 0;
+  }
+
+}
