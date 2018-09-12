@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Artwork } from '../artwork';
 import { Portfolio } from '../portfolio';
 
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { ArtworkService }  from '../artwork.service';
 
@@ -16,19 +17,25 @@ export class ArtworkDetailComponent implements OnInit {
 
   portfolio: Portfolio = {
     id: 1,
-    title: 'Love Portraits'
+    title: 'Stuffffff'
   }
 
-  artwork: Artwork;
+  artwork$: Observable<Artwork>;
 
   constructor(
     private route: ActivatedRoute,
-    private artworkService: ArtworkService,
-    private location: Location
+    private router: Router,
+    private service: ArtworkService
   ) { }
 
   ngOnInit() {
-    this.getArtwork();
+    // NOTE: this can be simpler if there is no navigation between artworks but now there is. see  https://angular.io/guide/router#route-definition-with-a-parameter
+    //
+    // the fix was to add async as in the template
+    this.artwork$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this.service.getArtwork(+params.get('id')))
+    );
+
     //
     var modal = document.querySelector('.modal');
     // close modal if clicked outside content area
@@ -41,16 +48,6 @@ export class ArtworkDetailComponent implements OnInit {
     });
   }
 
-  getArtwork(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.artworkService.getArtwork(id)
-      .subscribe(artwork => this.artwork = artwork);
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
   showModal(): void {
     var modal = document.querySelector('.modal');
     modal.classList.toggle('modal-open');
@@ -60,13 +57,18 @@ export class ArtworkDetailComponent implements OnInit {
     modal.classList.toggle('modal-open');
   }
 
-  showPrev(): void {
-    this.artworkService.getPrevArtwork(this.artwork.id)
-      .subscribe(artwork => this.artwork = artwork);
+  showPrev(id: number): void {
+    // better but still hack
+    let newId = id - 1
+    this.artwork$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this.service.getArtwork(newId))
+    );
   }
-  showNext(): void {
-    this.artworkService.getNextArtwork(this.artwork.id)
-      .subscribe(artwork => this.artwork = artwork);
+  showNext(id: number): void {
+    let newId = id + 1
+    this.artwork$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this.service.getArtwork(newId))
+    );
   }
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Portfolio } from '../portfolio';
 import { Artwork } from '../artwork';
 import { ArtworkService } from '../artwork.service';
@@ -18,14 +19,19 @@ export class ArtworksComponent implements OnInit {
   artworks: Artwork[];
 
   getArtworks(): void {
-    this.artworkService.getArtworks()
+    this.service.getArtworks()
       .subscribe(artworks => this.artworks = artworks)
   }
 
-  constructor(private artworkService: ArtworkService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: ArtworkService
+  ) { }
 
   ngOnInit() {
-    this.getArtworks()
+    //this.getArtworks()
+    this.service.getArtworks().subscribe(artworks => this.artworks = artworks)
   }
 
 }
