@@ -13,6 +13,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 To build for github pages run ```ng build --prod --output-path docs --base-href /jeremydost.github.io/```
+Also - after build is complete copy docs/index.html to docs/404.html and push that too (per https://angular.io/guide/deployment)
 
 ## Running unit tests
 
