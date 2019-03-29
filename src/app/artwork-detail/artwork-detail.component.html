@@ -2,7 +2,11 @@
   <div class="row">
     <div class="two columns">
       <nav id="leftnav">
-        <a routerLink="/portfolio"><i class="fas fa-angle-double-right"></i> {{portfolio.title}}</a>
+        <div *ngFor="let p of portfolioList; let i = index" class="portfolioList">
+            <a routerLink="/portfolio/{{p.slug}}" [class.active]="p.slug == activePortfolioSlug">
+              <i class="fas fa-angle-double-right"></i> {{p.title}}
+            </a>
+        </div>
       </nav>
     </div>
     <div class="eight columns">

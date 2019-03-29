@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Portfolio } from '../portfolio';
 import { Artwork } from '../artwork';
 import { ArtworkService } from '../artwork.service';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-artworks',
@@ -11,17 +13,9 @@ import { ArtworkService } from '../artwork.service';
 })
 export class ArtworksComponent implements OnInit {
 
-  portfolio: Portfolio = {
-    id: 1,
-    title: 'Love Portraits'
-  }
-
-  artworks: Artwork[];
-
-  getArtworks(): void {
-    this.service.getArtworks()
-      .subscribe(artworks => this.artworks = artworks)
-  }
+  portfolio$: Observable<Portfolio>;
+  portfolioList: Portfolio[];
+  artworkList: Artwork[];
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +25,26 @@ export class ArtworksComponent implements OnInit {
 
   ngOnInit() {
     //this.getArtworks()
-    this.service.getArtworks().subscribe(artworks => this.artworks = artworks)
+    this.service.getArtworks().subscribe(artworks => this.artworkList = artworks)
+
+    this.service.getPortfolios().subscribe(portfolios => this.portfolioList = portfolios)
+
+    this.portfolio$ = this.route.paramMap.pipe(
+      switchMap(
+        (params: ParamMap) => this.service.getPortfolioBySlug(params.get('slug'))
+      )
+    );
   }
+
+  getPortfolios(): void {
+    this.service.getPortfolios()
+      .subscribe(portfolios => this.portfolioList = portfolios)
+  }
+
+  getArtworks(): void {
+    this.service.getArtworks()
+      .subscribe(artworks => this.artworkList = artworks)
+  }
+
 
 }

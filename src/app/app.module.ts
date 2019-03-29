@@ -9,6 +9,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { PagesComponent } from './pages/pages.component';
 
 import { HttpClientModule }    from '@angular/common/http';
+import { PortfolioComponent } from './portfolio/portfolio.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule }    from '@angular/common/http';
     ArtworksComponent,
     ArtworkDetailComponent,
     MessagesComponent,
-    PagesComponent
+    PagesComponent,
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,

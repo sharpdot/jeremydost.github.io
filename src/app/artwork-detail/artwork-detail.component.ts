@@ -15,12 +15,11 @@ import { ArtworkService }  from '../artwork.service';
 })
 export class ArtworkDetailComponent implements OnInit {
 
-  portfolio: Portfolio = {
-    id: 1,
-    title: 'Stuffffff'
-  }
+  portfolioList: Portfolio[];
+  activePortfolioSlug: String;
 
   artwork$: Observable<Artwork>;
+  artworkList: Artwork[];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,14 +28,24 @@ export class ArtworkDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // NOTE: this can be simpler if there is no navigation between artworks but now there is. see  https://angular.io/guide/router#route-definition-with-a-parameter
-    //
-    // the fix was to add async as in the template
+    // TODO: make the artworks use a slug instead of id for the url
+
+    // NOTE: template must use async
     this.artwork$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.service.getArtwork(+params.get('id')))
+      switchMap((params: ParamMap) => this.service.getArtworkById(+params.get('id')))
     );
 
-    //
+    // TODO: change artworks data to link by portfolio id not slug
+    this.artwork$.subscribe(curArtwork => {
+      this.activePortfolioSlug = curArtwork.portfolio
+      // load all artworks for this portfolio for use by the prev/next links
+      this.service.getArtworksByPortfolioSlug(curArtwork.portfolio).subscribe(portfolioArtworks => this.artworkList = portfolioArtworks)
+    })
+
+    // TODO: move the portfolio list nav to a left nav component
+    this.service.getPortfolios().subscribe(allPortfolios => this.portfolioList = allPortfolios)
+
+    // handle modal content
     var modal = document.querySelector('.modal');
     // close modal if clicked outside content area
     document.querySelector('.modal-inner').addEventListener('click', function() {
@@ -57,18 +66,22 @@ export class ArtworkDetailComponent implements OnInit {
     modal.classList.toggle('modal-open');
   }
 
+  // TODO: update the url OR make the links use the portfolio's id
   showPrev(id: number): void {
-    // better but still hack
-    let newId = id - 1
-    this.artwork$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.service.getArtwork(newId))
-    );
+    // NOTE: use of to set the object as an observable
+    let newIndex = this.artworkList.findIndex(el => el.id === id) - 1
+    if (newIndex < 0){
+      newIndex = this.artworkList.length - 1
+    }
+    this.artwork$ = of(this.artworkList[newIndex])
   }
   showNext(id: number): void {
-    let newId = id + 1
-    this.artwork$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.service.getArtwork(newId))
-    );
+    // NOTE: use of to set the object as an observable
+    let newIndex = this.artworkList.findIndex(el => el.id === id) + 1
+    if (newIndex > this.artworkList.length - 1){
+      newIndex = 0
+    }
+    this.artwork$ = of(this.artworkList[newIndex])
   }
 
 
