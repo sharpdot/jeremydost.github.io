@@ -25,7 +25,7 @@ export class PagesComponent implements OnInit {
   ngOnInit() {
     // NOTE: this can be simpler if there is no navigation between pages. see  https://angular.io/guide/router#route-definition-with-a-parameter
     //
-    this.service.getPageListObs().subscribe(pages => this.pageList = pages)
+    this.service.getPages().subscribe(pages => this.pageList = pages)
     // the fix was to add async as in the template
       this.page$ = this.route.paramMap.pipe(
         switchMap((params: ParamMap) => this.service.getPage(params.get('slug')))
