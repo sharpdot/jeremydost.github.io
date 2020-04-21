@@ -1,6 +1,6 @@
 <div class="container" *ngIf="artwork$ | async as artworkAsync">
   <div class="row">
-    <div class="two columns">
+    <div class="three columns">
       <nav id="leftnav">
         <div *ngFor="let p of portfolioList; let i = index" class="portfolioList">
             <a routerLink="/portfolio/{{p.slug}}" [class.active]="p.slug == activePortfolioSlug">
@@ -9,7 +9,7 @@
         </div>
       </nav>
     </div>
-    <div class="eight columns">
+    <div class="seven columns">
       <p><a (click)="showPrev(artworkAsync.id)" class="u-pull-left"><i class="fas fa-angle-left"></i> Previous</a><a (click)="showNext(artworkAsync.id)" class="u-pull-right">Next <i class="fas fa-angle-right"></i></a></p>
     <article class="artworkDetail">
       <a (click)="showModal()"><img class="u-full-width" src="{{artworkAsync.img}}" /></a>
@@ -18,7 +18,7 @@
       <p class="description" [innerHTML]="artworkAsync.description"></p>
     </article>
     </div>
-    <div class="two columns">&nbsp;</div>
+    <div class="three columns">&nbsp;</div>
   </div>
 </div>
 

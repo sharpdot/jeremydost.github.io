@@ -1,6 +1,6 @@
 <div class="container" *ngIf="page$ | async as pageAsync">
   <div class="row">
-    <div class="two columns">
+    <div class="three columns">
       <!-- dynamic page links -->
       <nav id="leftnav">
         <div *ngFor="let link of pageList; let i = index">
@@ -8,10 +8,10 @@
         </div>
       </nav>
     </div>
-    <article class="eight columns">
+    <article class="seven columns">
       <h1>{{pageAsync.title}}</h1>
       <div class="pageBody" [innerHTML]="pageAsync.body"></div>
     </article>
-    <div class="two columns">&nbsp;</div>
+    <div class="three columns">&nbsp;</div>
   </div>
 </div>

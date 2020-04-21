@@ -1,6 +1,6 @@
 <div class="container" *ngIf="portfolio$ | async as portfolioAsync">
   <div class="row">
-    <div class="two columns">
+    <div class="three columns">
       <nav id="leftnav">
         <div *ngFor="let p of portfolioList; let i = index" class="portfolioList">
           <a routerLink="/portfolio/{{p.slug}}" [class.active]="p.slug == activePortfolioSlug">
@@ -9,7 +9,7 @@
         </div>
       </nav>
     </div>
-    <div class="eight columns">
+    <div class="seven columns">
       <h5>{{portfolioAsync.title}}</h5>
       <ul class="artworkList">
         <li *ngFor="let artwork of artworkList; let i = index">
@@ -21,6 +21,6 @@
         </li>
       </ul>
     </div>
-    <div class="two columns">&nbsp;</div>
+    <div class="three columns">&nbsp;</div>
   </div>
 </div>
