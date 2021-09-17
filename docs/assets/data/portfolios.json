@@ -1,4 +1,7 @@
 [
-  { "id": 1, "title": "Selected Drawings", "slug": "selected-drawings" },
-  { "id": 2, "title": "Double Portraits", "slug": "double-portraits" }
+  { "id": 1, "title": "Wild Wastings - Alloy", "slug": "recent-paintings" },
+  { "id": 2, "title": "Hands and Electronics", "slug": "hands-and-electronics" },
+  { "id": 3, "title": "Selected Drawings", "slug": "selected-drawings" },
+  { "id": 4, "title": "Double Portraits", "slug": "double-portraits" },
+  { "id": 5, "title": "Landscapes", "slug": "landscapes" }
 ]
