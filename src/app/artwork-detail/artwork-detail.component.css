@@ -24,6 +24,8 @@
 .modal img {
   border: 1px solid #999;
   box-sizing: content-box;
+  max-height: 80vh;
+  width: auto;
 }
 
 
